@@ -29,11 +29,97 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Botón 3 rayitas alineado a la izquierda */
+    .btn-hamburguesa {
+      position: absolute;
+      left: 20px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .btn-hamburguesa:hover {
+      color: #25d366;
     }
 
     header h1 {
       font-size: 1.8rem;
       letter-spacing: 1px;
+    }
+
+    /* Menú lateral desplegable */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px; /* Oculto inicio */
+      width: 260px;
+      height: 100%;
+      background-color: #ffffff;
+      color: #111;
+      box-shadow: 3px 0 10px rgba(0,0,0,0.3);
+      transition: left 0.3s ease;
+      z-index: 200;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .sidebar.activo {
+      left: 0; /* Se desliza al hacer clic */
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 12px;
+    }
+
+    .btn-cerrar {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .titulo-filtro {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .btn-filtro {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      background-color: #f4f6f8;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-filtro:hover {
+      background-color: #111;
+      color: #fff;
+    }
+
+    /* Clase para ocultar productos al filtrar */
+    .ocultar-zapato {
+      display: none !important;
     }
 
     /* Contenedor principal del catálogo */
@@ -95,12 +181,6 @@
       color: #111;
     }
 
-    .card-size {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 0.8rem;
-    }
-
     .card-price {
       font-size: 1.3rem;
       font-weight: 700;
@@ -108,21 +188,25 @@
       margin-bottom: 1rem;
     }
 
-    /* Botón de WhatsApp */
-    .btn-whatsapp {
-      display: inline-block;
+    /* Botón de ver más */
+    .btn-ver-mas {
+      display: block;
       text-align: center;
-      background-color: #25d366;
-      color: #fff;
+      background-color: #ffffff;
+      color: #000000;
       text-decoration: none;
       padding: 0.8rem 1rem;
       border-radius: 8px;
       font-weight: 600;
-      transition: background-color 0.2s ease;
+      font-size: 0.95rem;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-top: 1rem;
     }
 
-    .btn-whatsapp:hover {
-      background-color: #1eb857;
+    .btn-ver-mas:hover {
+      background-color: #333;
+      color: #fff;
+      transform: translateY(-2px);
     }
 
     /* Pie de página */
@@ -134,108 +218,94 @@
       margin-top: 3rem;
       font-size: 0.9rem;
     }
-    /*BOTON DE INMERSION
-    /* Botón para la tarjeta en el catálogo principal */
-.btn-ver-mas {
-  display: block;
-  text-align: center;
-  background-color: #ffffff; /* Color negro elegante */
-  color: #000000;
-  text-decoration: none;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  margin-top: 1rem;
-}
-
-/* Efecto al pasar el cursor o presionar */
-.btn-ver-mas:hover {
-  background-color: #333;
-  transform: translateY(-2px);
-}
   </style>
 </head>
 <body>
 
+  <!-- Encabezado con 3 rayitas alineadas a la izquierda -->
   <header>
+    <button class="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
     <h1>NANOPIPIS</h1>
   </header>
+
+  <!-- Menú lateral que se despliega -->
+  <div id="sidebar-menu" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Filtros</h3>
+      <button class="btn-cerrar" onclick="toggleMenu()">×</button>
+    </div>
+    <div class="sidebar-content">
+      <p class="titulo-filtro">Categoría por género:</p>
+      <button class="btn-filtro" onclick="filtrarZapatos('todos')">Ver Todos</button>
+      <button class="btn-filtro" onclick="filtrarZapatos('hombre')">Hombre</button>
+      <button class="btn-filtro" onclick="filtrarZapatos('mujer')">Mujer</button>
+    </div>
+  </div>
 
   <div class="container">
     <h2 class="section-title">Catálogo Disponible</h2>
 
     <div class="catalog">
 
-  <!--FOR 1-->
-<div class="card">
-  <img src="img/images (3).jfif" alt="FOR 1">
-  <div class="card-body">
-    <div>
-      <h3 class="card-title" style="color: #ffffff;">FOR 1</h3>
-      <p class="card-price">$250.000 COP</p>
-    </div>
-    <!-- Ahora redirige a la página del producto -->
-    <a href="For 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
-  </div>
-</div>
+      <!-- FOR 1 (Ejemplo: Hombre) -->
+      <div class="card hombre">
+        <img src="img/images (3).jfif" alt="FOR 1">
+        <div class="card-body">
+          <div>
+            <h3 class="card-title" style="color: #ffffff;">FOR 1</h3>
+            <p class="card-price">$250.000 COP</p>
+          </div>
+          <a href="For 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
+        </div>
+      </div>
 
- <!-- CAMPUS -->
+      <!-- CAMPUS (Ejemplo: Unisex / Hombre y Mujer) -->
+      <div class="card hombre mujer">
+        <img src="img/images (2).jfif" alt="CAMPUS">
+        <div class="card-body">
+          <div>
+            <h3 class="card-title" style="color: #ffffff;">CAMPUS</h3>
+            <p class="card-price">$180.000 COP</p>
+          </div>
+          <a href="campus.html" class="btn-ver-mas">Ver detalles y comprar</a>
+        </div>
+      </div>
 
-<div class="card">
-  <img src="img/images (2).jfif" alt="CAMPUS">
-  <div class="card-body">
-    <div>
-      <h3 class="card-title" style="color: #ffffff;">CAMPUS</h3>
-      <p class="card-price">$180.000 COP</p>
-    </div>
-    <!-- Ahora redirige a la página del producto -->
-    <a href="campus.html" class="btn-ver-mas">Ver detalles y comprar</a>
-  </div>
-</div>
-
-<!--jordan 1-->
-
-<div class="card">
-    <img src="img/images.jfif" alt="jordan 1">
-    <div class="card-body">
-        <div>
+      <!-- JORDAN 1 (Ejemplo: Hombre) -->
+      <div class="card hombre">
+        <img src="img/images.jfif" alt="jordan 1">
+        <div class="card-body">
+          <div>
             <h3 class="card-title" style="color: #ffffff;">JORDAN 1</h3>
             <p class="card-price">$180.000 COP</p>
+          </div>
+          <a href="jordan 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
-        <a href="jordan 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
-    </div>
-</div>
+      </div>
 
-<!--EL PIPI DE CHEMO-->
-
-<div class="card">
-    <img src="img/images (2).jfif" alt="PIPICHEMO">
-    <div class="card-body">
-        <div>
+      <!-- PIPICHEMO (Ejemplo: Mujer) -->
+      <div class="card mujer">
+        <img src="img/images (2).jfif" alt="PIPICHEMO">
+        <div class="card-body">
+          <div>
             <h3 class="card-title" style="color: #ffffff;">PIPICHEMO</h3>
             <p class="card-price">$180.000 COP</p>
+          </div>
+          <a href="ppchemo.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
-        <a href="ppchemo.html" class="btn-ver-mas">Ver detalles y comprar</a>
-    </div>
-</div>
+      </div>
 
-<!--EL PIPI DE jonier-->
-
-<div class="card">
-    <img src="img/images (2).jfif" alt="PIPI DE JONIER">
-    <div class="card-body">
-        <div>
+      <!-- PIPI DE JONIER (Ejemplo: Hombre) -->
+      <div class="card hombre">
+        <img src="img/images (2).jfif" alt="PIPI DE JONIER">
+        <div class="card-body">
+          <div>
             <h3 class="card-title" style="color: #ffffff;">PIPI DE JONIER</h3>
             <p class="card-price">$180.000 COP</p>
+          </div>
+          <a href="ppjonier.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
-        <a href="ppjonier.html" class="btn-ver-mas">Ver detalles y comprar</a>
-    </div>
-</div>
-
-
-   
+      </div>
 
     </div>
   </div>
@@ -244,5 +314,31 @@
     <p>&copy; 2026 NANOPIPIS - Envíos a el ano que deceen</p>
   </footer>
 
+  <!-- Lógica JavaScript para desplegar el menú y filtrar -->
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar-menu');
+      sidebar.classList.toggle('activo');
+    }
+
+    function filtrarZapatos(categoria) {
+      const zapatos = document.querySelectorAll('.card');
+
+      zapatos.forEach(zapato => {
+        if (categoria === 'todos') {
+          zapato.classList.remove('ocultar-zapato');
+        } else {
+          if (zapato.classList.contains(categoria)) {
+            zapato.classList.remove('ocultar-zapato');
+          } else {
+            zapato.classList.add('ocultar-zapato');
+          }
+        }
+      });
+
+      toggleMenu(); // Cierra el menú automáticamente al hacer clic en un filtro
+    }
+  </script>
+
 </body>
-</html>  
+</html>
