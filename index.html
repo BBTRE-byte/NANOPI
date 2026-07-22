@@ -23,7 +23,7 @@
     header {
       background-color: #111;
       color: #fff;
-      padding: 1.5rem 2rem;
+      padding: 1.2rem 2rem;
       text-align: center;
       position: sticky;
       top: 0;
@@ -34,7 +34,7 @@
       justify-content: center;
     }
 
-    /* Botón 3 rayitas alineado a la izquierda */
+    /* Botón 3 rayitas (Izquierda) */
     .btn-hamburguesa {
       position: absolute;
       left: 20px;
@@ -44,10 +44,32 @@
       font-size: 1.8rem;
       cursor: pointer;
       line-height: 1;
+      transition: color 0.2s ease;
     }
 
     .btn-hamburguesa:hover {
       color: #25d366;
+    }
+
+    /* Botón Lupa Minimalista (Derecha) */
+    .btn-lupa {
+      position: absolute;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #e0e0e0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .btn-lupa:hover {
+      color: #25d366;
+      background-color: rgba(255, 255, 255, 0.08);
     }
 
     header h1 {
@@ -55,11 +77,51 @@
       letter-spacing: 1px;
     }
 
+    /* Barra de Búsqueda Flotante Minimalista */
+    .search-bar-container {
+      display: none;
+      position: sticky;
+      top: 67px;
+      z-index: 99;
+      background-color: #111111;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .search-bar-container.activa {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Input Limpio con bordes suaves */
+    .input-busqueda {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: 1px solid #333;
+      background-color: #1a1a1a;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-busqueda::placeholder {
+      color: #888;
+    }
+
+    .input-busqueda:focus {
+      border-color: #25d366;
+      box-shadow: 0 0 10px rgba(37, 211, 102, 0.2);
+    }
+
     /* Menú lateral desplegable */
     .sidebar {
       position: fixed;
       top: 0;
-      left: -280px; /* Oculto inicio */
+      left: -280px;
       width: 260px;
       height: 100%;
       background-color: #ffffff;
@@ -72,7 +134,7 @@
     }
 
     .sidebar.activo {
-      left: 0; /* Se desliza al hacer clic */
+      left: 0;
     }
 
     .sidebar-header {
@@ -117,7 +179,6 @@
       color: #fff;
     }
 
-    /* Clase para ocultar productos al filtrar */
     .ocultar-zapato {
       display: none !important;
     }
@@ -136,7 +197,7 @@
       color: #222;
     }
 
-    /* Cuadrícula de productos (Grid) */
+    /* Cuadrícula de productos */
     .catalog {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -178,17 +239,16 @@
       font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
-      color: #111;
+      color: #ffffff;
     }
 
     .card-price {
       font-size: 1.3rem;
       font-weight: 700;
-      color: #25d366; /* Verde tipo WhatsApp */
+      color: #25d366;
       margin-bottom: 1rem;
     }
 
-    /* Botón de ver más */
     .btn-ver-mas {
       display: block;
       text-align: center;
@@ -209,7 +269,6 @@
       transform: translateY(-2px);
     }
 
-    /* Pie de página */
     footer {
       text-align: center;
       padding: 2rem;
@@ -222,13 +281,30 @@
 </head>
 <body>
 
-  <!-- Encabezado con 3 rayitas alineadas a la izquierda -->
+  <!-- Encabezado con menú hamburguesa y Lupa SVG minimalista -->
   <header>
     <button class="btn-hamburguesa" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
     <h1>NANOPIPIS</h1>
+    <button class="btn-lupa" onclick="toggleBuscador()" aria-label="Buscar zapato">
+      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
   </header>
 
-  <!-- Menú lateral que se despliega -->
+  <!-- Campo de entrada desplegable para buscar -->
+  <div id="search-container" class="search-bar-container">
+    <input 
+      type="text" 
+      id="input-buscar" 
+      class="input-busqueda" 
+      placeholder="Escribe el zapato que buscas (ej: for, jordan, campus)..." 
+      oninput="buscarZapato()"
+    >
+  </div>
+
+  <!-- Menú lateral -->
   <div id="sidebar-menu" class="sidebar">
     <div class="sidebar-header">
       <h3>Filtros</h3>
@@ -247,60 +323,60 @@
 
     <div class="catalog">
 
-      <!-- FOR 1 (Ejemplo: Hombre) -->
+      <!-- FOR 1 -->
       <div class="card hombre">
         <img src="img/images (3).jfif" alt="FOR 1">
         <div class="card-body">
           <div>
-            <h3 class="card-title" style="color: #ffffff;">FOR 1</h3>
+            <h3 class="card-title">FOR 1</h3>
             <p class="card-price">$250.000 COP</p>
           </div>
           <a href="For 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- CAMPUS (Ejemplo: Unisex / Hombre y Mujer) -->
+      <!-- CAMPUS -->
       <div class="card hombre mujer">
         <img src="img/images (2).jfif" alt="CAMPUS">
         <div class="card-body">
           <div>
-            <h3 class="card-title" style="color: #ffffff;">CAMPUS</h3>
+            <h3 class="card-title">CAMPUS</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
           <a href="campus.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- JORDAN 1 (Ejemplo: Hombre) -->
+      <!-- JORDAN 1 -->
       <div class="card hombre">
-        <img src="img/images.jfif" alt="jordan 1">
+        <img src="img/images.jfif" alt="JORDAN 1">
         <div class="card-body">
           <div>
-            <h3 class="card-title" style="color: #ffffff;">JORDAN 1</h3>
+            <h3 class="card-title">JORDAN 1</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
           <a href="jordan 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- PIPICHEMO (Ejemplo: Mujer) -->
+      <!-- PIPICHEMO -->
       <div class="card mujer">
         <img src="img/images (2).jfif" alt="PIPICHEMO">
         <div class="card-body">
           <div>
-            <h3 class="card-title" style="color: #ffffff;">PIPICHEMO</h3>
+            <h3 class="card-title">PIPICHEMO</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
           <a href="ppchemo.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- PIPI DE JONIER (Ejemplo: Hombre) -->
+      <!-- PIPI DE JONIER -->
       <div class="card hombre">
         <img src="img/images (2).jfif" alt="PIPI DE JONIER">
         <div class="card-body">
           <div>
-            <h3 class="card-title" style="color: #ffffff;">PIPI DE JONIER</h3>
+            <h3 class="card-title">PIPI DE JONIER</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
           <a href="ppjonier.html" class="btn-ver-mas">Ver detalles y comprar</a>
@@ -314,16 +390,23 @@
     <p>&copy; 2026 NANOPIPIS - Envíos a el ano que deceen</p>
   </footer>
 
-  <!-- Lógica JavaScript para desplegar el menú y filtrar -->
+  <!-- Lógica de Menú y Buscador Flexible -->
   <script>
     function toggleMenu() {
       const sidebar = document.getElementById('sidebar-menu');
       sidebar.classList.toggle('activo');
     }
 
+    function toggleBuscador() {
+      const searchContainer = document.getElementById('search-container');
+      searchContainer.classList.toggle('activa');
+      if (searchContainer.classList.contains('activa')) {
+        document.getElementById('input-buscar').focus();
+      }
+    }
+
     function filtrarZapatos(categoria) {
       const zapatos = document.querySelectorAll('.card');
-
       zapatos.forEach(zapato => {
         if (categoria === 'todos') {
           zapato.classList.remove('ocultar-zapato');
@@ -335,8 +418,66 @@
           }
         }
       });
+      toggleMenu();
+    }
 
-      toggleMenu(); // Cierra el menú automáticamente al hacer clic en un filtro
+    // --- BUSCADOR FLEXIBLE (Tolera errores de ortografía como 'fur' por 'for') ---
+    function buscarZapato() {
+      const textoIngresado = document.getElementById('input-buscar').value.toLowerCase().trim();
+      const zapatos = document.querySelectorAll('.card');
+
+      zapatos.forEach(zapato => {
+        const tituloZapato = zapato.querySelector('.card-title').textContent.toLowerCase();
+        
+        if (textoIngresado === '') {
+          zapato.classList.remove('ocultar-zapato');
+          return;
+        }
+
+        // Evalúa coincidencia exacta, palabras parecidas o fragmentos
+        if (esCoincidenciaFlexible(textoIngresado, tituloZapato)) {
+          zapato.classList.remove('ocultar-zapato');
+        } else {
+          zapato.classList.add('ocultar-zapato');
+        }
+      });
+    }
+
+    // Algoritmo de flexibilidad de texto
+    function esCoincidenciaFlexible(busqueda, titulo) {
+      // 1. Si el título contiene lo que se escribió
+      if (titulo.includes(busqueda)) return true;
+
+      // 2. Compara cada palabra
+      const palabrasBusqueda = busqueda.split(' ');
+      const palabrasTitulo = titulo.split(' ');
+
+      return palabrasBusqueda.some(pBusqueda => {
+        return palabrasTitulo.some(pTitulo => {
+          if (pTitulo.includes(pBusqueda) || pBusqueda.includes(pTitulo)) return true;
+          // Si difieren solo por 1 o 2 letras (ej: "fur" vs "for")
+          return calcularDistancia(pBusqueda, pTitulo) <= 2;
+        });
+      });
+    }
+
+    // Cálculo de diferencia entre palabras (Levenshtein Distance)
+    function calcularDistancia(a, b) {
+      const matrix = Array.from({ length: a.length + 1 }, () => []);
+      for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+      for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          const costo = a[i - 1] === b[j - 1] ? 0 : 1;
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j - 1] + costo
+          );
+        }
+      }
+      return matrix[a.length][b.length];
     }
   </script>
 
