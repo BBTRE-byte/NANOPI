@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NANOPIPIS</title>
+  
+  <style>
+    /* Estilos generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f8;
+      color: #333;
+    }
+
+    /* Encabezado */
+    header {
+      background-color: #111;
+      color: #fff;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* Contenedor principal del catálogo */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      color: #222;
+    }
+
+    /* Cuadrícula de productos (Grid) */
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Tarjeta de Zapato */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    .card-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #111;
+    }
+
+    .card-size {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.8rem;
+    }
+
+    .card-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #25d366; /* Verde tipo WhatsApp */
+      margin-bottom: 1rem;
+    }
+
+    /* Botón de WhatsApp */
+    .btn-whatsapp {
+      display: inline-block;
+      text-align: center;
+      background-color: #25d366;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1eb857;
+    }
+
+    /* Pie de página */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #111;
+      color: #aaa;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+    /*BOTON DE INMERSION
+    /* Botón para la tarjeta en el catálogo principal */
+.btn-ver-mas {
+  display: block;
+  text-align: center;
+  background-color: #111; /* Color negro elegante */
+  color: #fff;
+  text-decoration: none;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 1rem;
+}
+
+/* Efecto al pasar el cursor o presionar */
+.btn-ver-mas:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>NANOPIPIS</h1>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Catálogo Disponible</h2>
+
+    <div class="catalog">
+
+  <!--FOR 1-->
+<div class="card">
+  <img src="img/images (3).jfif" alt="FOR 1">
+  <div class="card-body">
+    <div>
+      <h3 class="card-title">FOR 1</h3>
+      <p class="card-price">$190.000 COP</p>
+    </div>
+    <!-- Ahora redirige a la página del producto -->
+    <a href="For 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
+  </div>
+</div>
+
+ <!-- CAMPUS -->
+
+<div class="card">
+  <img src="img/images (2).jfif" alt="CAMPUS">
+  <div class="card-body">
+    <div>
+      <h3 class="card-title">CAMPUS</h3>
+      <p class="card-price">$180.000 COP</p>
+    </div>
+    <!-- Ahora redirige a la página del producto -->
+    <a href="campus.html" class="btn-ver-mas">Ver detalles y comprar</a>
+  </div>
+</div>
+
+<!--jordan 1-->
+
+<div class="card">
+    <img src="img/images.jfif" alt="jordan 1">
+    <div class="card-body">
+        <div>
+            <h3 class="card-title">JORDAN 1</h3>
+            <p class="card-price">$180.000 COP</p>
+        </div>
+        <a href="jordan 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
+    </div>
+</div>
+
+<!--EL PIPI DE CHEMO-->
+
+<div class="card">
+    <img src="img/images (2).jfif" alt="PIPICHEMO">
+    <div class="card-body">
+        <div>
+            <h3 class="card-title">PIPICHEMO</h3>
+            <p class="card-price">$180.000 COP</p>
+        </div>
+        <a href="ppchemo.html" class="btn-ver-mas">Ver detalles y comprar</a>
+    </div>
+</div>
+
+
+   
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 NANOPIPIS - Envíos a el ano que deceen</p>
+  </footer>
+
+</body>
+</html>  
