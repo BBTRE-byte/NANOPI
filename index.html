@@ -136,6 +136,7 @@
       z-index: 200;
       padding: 20px;
       box-sizing: border-box;
+      overflow-y: auto;
     }
 
     .sidebar.activo {
@@ -158,30 +159,100 @@
       color: #333;
     }
 
-    .titulo-filtro {
-      margin-top: 20px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      color: #555;
+    /* Estilos para los Desplegables con Título en Cuadro */
+    details.desplegable-filtro {
+      margin-top: 15px;
     }
 
-    .btn-filtro {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
+    /* Solo el título (Summary) lleva cuadro */
+    details.desplegable-filtro summary {
+      font-weight: bold;
+      color: #111;
       background-color: #f4f6f8;
       border: 1px solid #ddd;
       border-radius: 8px;
+      padding: 12px;
       cursor: pointer;
-      text-align: left;
-      font-weight: 600;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
       transition: background-color 0.2s ease;
     }
 
+    details.desplegable-filtro summary:hover {
+      background-color: #e9ecef;
+    }
+
+    details.desplegable-filtro summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Flechita animada en el título */
+    details.desplegable-filtro summary::after {
+      content: '▼';
+      font-size: 0.75rem;
+      color: #555;
+      transition: transform 0.2s ease;
+    }
+
+    details.desplegable-filtro[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    /* Opciones dentro del desplegable sin cuadro */
+    .opciones-filtro {
+      padding: 8px 5px 0 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Estilo de lista con círculo a la izquierda */
+    .btn-filtro {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 8px 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 500;
+      color: #444;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
     .btn-filtro:hover {
-      background-color: #111;
-      color: #fff;
+      color: #000;
+    }
+
+    /* Círculo indicador (radio button personalizado) */
+    .btn-filtro::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #888;
+      border-radius: 50%;
+      margin-right: 10px;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    /* Estado seleccionado: El círculo se pone NEGRO */
+    .btn-filtro.seleccionado {
+      color: #000;
+      font-weight: 700;
+    }
+
+    .btn-filtro.seleccionado::before {
+      background-color: #000;
+      border-color: #000;
+      box-shadow: inset 0 0 0 2px #fff; /* Efecto elegante de punto interior */
     }
 
     .ocultar-zapato {
@@ -201,19 +272,19 @@
       font-size: 1.5rem;
       color: #ffffff;
       position: relative;
-      padding-bottom: 10px; /* Espacio entre el texto y la línea */
+      padding-bottom: 10px;
     }
 
-    /* Línea estéticamente integrada debajo del título */
+    /* Línea estilizada debajo del título */
     .section-title::after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 250px; /* Largo de la línea */
-      height: 2px; /* Grosor de la línea */
-      background-color: #ffffff; /* Color verde que combina con el tema */
+      width: 250px;
+      height: 2px;
+      background-color: #ffffff;
       border-radius: 2px;
     }
 
@@ -331,21 +402,39 @@
       <button class="btn-cerrar" onclick="toggleMenu()">×</button>
     </div>
     <div class="sidebar-content">
-      <p class="titulo-filtro">Categoría por género:</p>
-      <button class="btn-filtro" onclick="filtrarZapatos('todos')">Ver Todos</button>
-      <button class="btn-filtro" onclick="filtrarZapatos('hombre')">Hombre</button>
-      <button class="btn-filtro" onclick="filtrarZapatos('mujer')">Mujer</button>
+      
+      <!-- DESPLEGABLE DE GÉNERO -->
+      <details class="desplegable-filtro">
+        <summary>Categoría por género</summary>
+        <div class="opciones-filtro">
+          <button class="btn-filtro btn-genero seleccionado" onclick="filtrarGenero('todos', this)">Ver Todos</button>
+          <button class="btn-filtro btn-genero" onclick="filtrarGenero('hombre', this)">Hombre</button>
+          <button class="btn-filtro btn-genero" onclick="filtrarGenero('mujer', this)">Mujer</button>
+          <button class="btn-filtro btn-genero" onclick="filtrarGenero('ninos', this)">Niños</button>
+        </div>
+      </details>
+
+      <!-- DESPLEGABLE DE PRECIOS -->
+      <details class="desplegable-filtro">
+        <summary>Filtrar por precio</summary>
+        <div class="opciones-filtro">
+          <button class="btn-filtro btn-precio seleccionado" onclick="filtrarPrecio('todos', this)">Todos los precios</button>
+          <button class="btn-filtro btn-precio" onclick="filtrarPrecio('100-150', this)">De 100 a 150</button>
+          <button class="btn-filtro btn-precio" onclick="filtrarPrecio('150-200', this)">De 150 a 200</button>
+        </div>
+      </details>
+
     </div>
   </div>
 
   <div class="container">
-    <h2 class="section-title" style="color: #ffffff;">Catálogo Disponible</h2>
+    <h2 class="section-title">Catálogo Disponible</h2>
 
     <div class="catalog">
 
       <!-- FOR 1 -->
-      <div class="card hombre">
-        <img src="img/images (3).jfif" alt="FOR 1">
+      <div class="card hombre ninos" data-precio="150000">
+        <img src="zapatos/Air Force 1.png" alt="FOR 1">
         <div class="card-body">
           <div>
             <h3 class="card-title">FOR 1</h3>
@@ -356,8 +445,8 @@
       </div>
 
       <!-- CAMPUS -->
-      <div class="card hombre mujer">
-        <img src="img/images (2).jfif" alt="CAMPUS">
+      <div class="card hombre mujer ninos" data-precio="180000">
+        <img src="zapatos/CAMPUS.png" alt="CAMPUS">
         <div class="card-body">
           <div>
             <h3 class="card-title">CAMPUS</h3>
@@ -368,8 +457,8 @@
       </div>
 
       <!-- JORDAN 1 -->
-      <div class="card hombre">
-        <img src="img/images.jfif" alt="JORDAN 1">
+      <div class="card hombre" data-precio="180000">
+        <img src="zapatos/Jordan 1.png" alt="JORDAN 1">
         <div class="card-body">
           <div>
             <h3 class="card-title">JORDAN 1</h3>
@@ -379,63 +468,63 @@
         </div>
       </div>
 
-      <!-- PIPICHEMO -->
-      <div class="card mujer">
-        <img src="img/images (2).jfif" alt="PIPICHEMO">
+      <!-- converse -->
+      <div class="card mujer" data-precio="180000">
+        <img src="zapatos/converse.png" alt="converse">
         <div class="card-body">
           <div>
-            <h3 class="card-title">PIPICHEMO</h3>
+            <h3 class="card-title">converse</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
-          <a href="ppchemo.html" class="btn-ver-mas">Ver detalles y comprar</a>
+          <a href="converse.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- PIPI DE JONIER -->
-      <div class="card hombre">
-        <img src="img/images (2).jfif" alt="PIPI DE JONIER">
+      <!-- puma SC -->
+      <div class="card hombre ninos" data-precio="180000">
+        <img src="zapatos/Puma Suede Classic.png" alt="puma SC">
         <div class="card-body">
           <div>
-            <h3 class="card-title">PIPI DE JONIER</h3>
+            <h3 class="card-title">puma SC</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
-          <a href="ppjonier.html" class="btn-ver-mas">Ver detalles y comprar</a>
+          <a href="puma sc.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- TRULULU -->
-      <div class="card mujer">
-        <img src="img/images (3).jfif" alt="TRULULU">
+      <!-- NEW BALANCE -->
+      <div class="card mujer ninos" data-precio="180000">
+        <img src="zapatos/New Balance.png" alt="NEW BALANCE">
         <div class="card-body">
           <div>
-            <h3 class="card-title">TRULULU</h3>
+            <h3 class="card-title">NEW BALANCE</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
-          <a href="trululu.html" class="btn-ver-mas">Ver detalles y comprar</a>
+          <a href="new balance.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-       <!-- CANDY -->
-      <div class="card mujer">
-        <img src="img/images (2).jfif" alt="CANDY">
+      <!-- CROCS -->
+      <div class="card mujer" data-precio="180000">
+        <img src="zapatos/Crocs.png" alt="CROCS">
         <div class="card-body">
           <div>
-            <h3 class="card-title">CANDY</h3>
+            <h3 class="card-title">CROCS</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
-          <a href="candy.html" class="btn-ver-mas">Ver detalles y comprar</a>
+          <a href="crocs.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
-      <!-- VALLE -->
-      <div class="card mujer">
-        <img src="img/images.jfif" alt="VALLE">
+      <!-- vans 1 -->
+      <div class="card mujer" data-precio="180000">
+        <img src="zapatos/Vans 1.png" alt="VANS">
         <div class="card-body">
           <div>
-            <h3 class="card-title">VALLE</h3>
+            <h3 class="card-title">VANS</h3>
             <p class="card-price">$180.000 COP</p>
           </div>
-          <a href="valle.html" class="btn-ver-mas">Ver detalles y comprar</a>
+          <a href="vans 1.html" class="btn-ver-mas">Ver detalles y comprar</a>
         </div>
       </div>
 
@@ -446,8 +535,11 @@
     <p>&copy; 2026 NANOPIPIS - Envíos a el ano que deceen</p>
   </footer>
 
-  <!-- Lógica de Menú y Buscador Flexible -->
+  <!-- Lógica de Menú, Filtros Combinados y Buscador -->
   <script>
+    let filtroGeneroActual = 'todos';
+    let filtroPrecioActual = 'todos';
+
     function toggleMenu() {
       const sidebar = document.getElementById('sidebar-menu');
       sidebar.classList.toggle('activo');
@@ -461,23 +553,54 @@
       }
     }
 
-    function filtrarZapatos(categoria) {
-      const zapatos = document.querySelectorAll('.card');
-      zapatos.forEach(zapato => {
-        if (categoria === 'todos') {
-          zapato.classList.remove('ocultar-zapato');
-        } else {
-          if (zapato.classList.contains(categoria)) {
-            zapato.classList.remove('ocultar-zapato');
-          } else {
-            zapato.classList.add('ocultar-zapato');
-          }
-        }
-      });
+    function filtrarGenero(categoria, boton) {
+      filtroGeneroActual = categoria;
+      
+      document.querySelectorAll('.btn-genero').forEach(btn => btn.classList.remove('seleccionado'));
+      boton.classList.add('seleccionado');
+
+      aplicarFiltrosCombinados();
       toggleMenu();
     }
 
-    // --- BUSCADOR FLEXIBLE (Tolera errores de ortografía como 'fur' por 'for') ---
+    function filtrarPrecio(rango, boton) {
+      filtroPrecioActual = rango;
+
+      document.querySelectorAll('.btn-precio').forEach(btn => btn.classList.remove('seleccionado'));
+      boton.classList.add('seleccionado');
+
+      aplicarFiltrosCombinados();
+      toggleMenu();
+    }
+
+    function aplicarFiltrosCombinados() {
+      const zapatos = document.querySelectorAll('.card');
+
+      zapatos.forEach(zapato => {
+        const precio = parseInt(zapato.getAttribute('data-precio'));
+        
+        // Comprobar género
+        const cumpleGenero = (filtroGeneroActual === 'todos') || zapato.classList.contains(filtroGeneroActual);
+
+        // Comprobar precio
+        let cumplePrecio = false;
+        if (filtroPrecioActual === 'todos') {
+          cumplePrecio = true;
+        } else if (filtroPrecioActual === '100-150') {
+          cumplePrecio = (precio >= 100000 && precio <= 150000);
+        } else if (filtroPrecioActual === '150-200') {
+          cumplePrecio = (precio >= 150000 && precio <= 200000);
+        }
+
+        if (cumpleGenero && cumplePrecio) {
+          zapato.classList.remove('ocultar-zapato');
+        } else {
+          zapato.classList.add('ocultar-zapato');
+        }
+      });
+    }
+
+    // --- BUSCADOR FLEXIBLE ---
     function buscarZapato() {
       const textoIngresado = document.getElementById('input-buscar').value.toLowerCase().trim();
       const zapatos = document.querySelectorAll('.card');
@@ -486,11 +609,10 @@
         const tituloZapato = zapato.querySelector('.card-title').textContent.toLowerCase();
         
         if (textoIngresado === '') {
-          zapato.classList.remove('ocultar-zapato');
+          aplicarFiltrosCombinados();
           return;
         }
 
-        // Evalúa coincidencia exacta, palabras parecidas o fragmentos
         if (esCoincidenciaFlexible(textoIngresado, tituloZapato)) {
           zapato.classList.remove('ocultar-zapato');
         } else {
@@ -499,25 +621,20 @@
       });
     }
 
-    // Algoritmo de flexibilidad de texto
     function esCoincidenciaFlexible(busqueda, titulo) {
-      // 1. Si el título contiene lo que se escribió
       if (titulo.includes(busqueda)) return true;
 
-      // 2. Compara cada palabra
       const palabrasBusqueda = busqueda.split(' ');
       const palabrasTitulo = titulo.split(' ');
 
       return palabrasBusqueda.some(pBusqueda => {
         return palabrasTitulo.some(pTitulo => {
           if (pTitulo.includes(pBusqueda) || pBusqueda.includes(pTitulo)) return true;
-          // Si difieren solo por 1 o 2 letras (ej: "fur" vs "for")
           return calcularDistancia(pBusqueda, pTitulo) <= 2;
         });
       });
     }
 
-    // Cálculo de diferencia entre palabras (Levenshtein Distance)
     function calcularDistancia(a, b) {
       const matrix = Array.from({ length: a.length + 1 }, () => []);
       for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
